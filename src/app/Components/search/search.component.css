@@ -1,0 +1,94 @@
+.alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo formgroup busquedas */
+.custom-row-style label {
+  font-weight: bold;
+  color: white;
+}
+
+.custom-row-style .form-group {
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.custom-row-style input[type="text"],
+.custom-row-style input[type="date"] {
+  border-radius: 5px;
+
+}
+
+.custom-row-style .btn-primary {
+  border-color: #0056b3;
+  background: #0056b3;
+  color: white;
+  font-weight: bold;
+}
+
+.custom-row-style .btn-primary:hover {
+  background-color: #4575a8;
+  border-color: #4575a8;
+}
+
+.custom-row-style .bi-search {
+  margin-right: 5px;
+}
+
+.formSearch {
+  background: #0D2240;
+  border-color: #0D2240;
+}
+
+
+
+.btn-select{
+   background-color: #0b9852;
+   border-color: #0b9852;
+   color: white;
+   font-weight: bold;
+}
+
+.btn-select :hover{
+  cursor: pointer;
+}
+
+/* Estilos tabla viajes */
+
+.table {
+  border-collapse: separate; 
+  border-spacing: 0 10px; 
+}
+
+td {
+  padding: 10px; 
+  border: 1px solid #ddd; 
+  border-left: none;
+  border-right: none;
+}
+
+.td-first{
+  border-radius: 5px 0px 0px 5px !important;
+  border-left: 1px solid #ddd;
+}
+
+.td-last{
+  border-radius: 0px 5px 5px 0px !important;
+  border-right: 1px solid #ddd; 
+}
+
+
+@media (max-width: 767px) {
+  .row.custom-row-style .form-group {
+    margin-bottom: 15px;
+    margin-top: 5px;
+  }
+}
+
+

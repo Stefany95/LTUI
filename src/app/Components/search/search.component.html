@@ -1,0 +1,90 @@
+<div class="container-fluid  padding-buttom">
+  <hr>
+</div>
+
+  <div class="container formSearch">
+
+    <form [formGroup]="formSearchFilter">
+
+      <div class="row custom-row-style">
+
+        <div class="form-group col-md-3">
+          <ng-template #rt let-r="result" let-t="term">
+            <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+          </ng-template>
+
+          <label for="typeahead-template">From: </label>
+
+          <input id="typeahead-format" type="text" class="form-control" formControlName="from" [resultTemplate]="rt"
+            [ngbTypeahead]="search" [resultFormatter]="formatter" [inputFormatter]="formatter"
+            (selectItem)="onSelectOption($event,true)" />
+        </div>
+
+        <div class="form-group col-md-3">
+          <ng-template #rt let-r="result" let-t="term">
+            <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+          </ng-template>
+
+          <label for="typeahead-template">To: </label>
+
+          <input id="typeahead-format" type="text" class="form-control" formControlName="to" [resultTemplate]="rt"
+            [ngbTypeahead]="search" [resultFormatter]="formatter" [inputFormatter]="formatter"
+            (selectItem)="onSelectOption($event,false)" />
+        </div>
+
+        <div class="form-group col-md-3">
+          <label>Travel Date</label>
+          <input class="form-control" type="date" formControlName="travelDate">
+        </div>
+
+        <div class="form-group col-md-3">
+          <label>&nbsp;</label>
+          <button type="button" class="btn btn-primary  btn-block w-100" (click)="GetBusByCity()">
+            <i class="bi bi-search"></i> Buscar
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="container">
+    <div class="row"> 
+      <div class="col">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Compañía</th>
+          <th scope="col">Partida</th>
+          <th scope="col">Llegada</th>
+          <th scope="col">Clase</th>
+          <th scope="col">Precio</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bus of busInfoTable; let i =index">
+          <td class="td-first">{{bus.company}}</td>
+          <td>{{bus.departure}}</td>
+          <td>{{bus.arrival}}</td>
+          <td>{{bus.seatClass}}</td>
+          <td>{{bus.price}}</td>
+          <td class="text-center td-last">
+            <button (click)="OnSelectedBus(bus)" type="button" class="btn btn-select">
+              Seleccionar
+            </button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<div class="alert" [ngClass]="{'alert-warning': isError, 'alert-success': !isError}" *ngIf="messageAlert">
+  {{ messageAlert }}
+  <button type="button" class="btn-close" aria-label="Close" (click)="close()">
+  </button>
+</div> 
+
+<app-spinner></app-spinner>

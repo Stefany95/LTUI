@@ -1,0 +1,68 @@
+.margin-left {
+    margin-left: 20px;
+}
+
+.mb-1 {
+    margin-bottom: 10px;
+}
+
+.top-bottom {
+    margin: 10px 0 0 10px;
+}
+
+.borderDetailBus span {
+    border-radius: 5px !important;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.seat-add{
+    border-radius: 5px !important;
+    border: 1px solid #ddd;
+    background-color: #0b9852;
+    color: white;
+}
+.tittle-DetailBus {
+    background: #0D2240;
+    border-color: #0D2240;
+    color: white;
+    border-radius: 2px !important;
+}
+
+.border-container {
+    border: 1px solid #ddd;
+    border-radius: 5px !important;
+}
+
+.title-select-asiento {
+    border-bottom: 3px solid #0b9852;
+
+}
+
+.btn-selected {
+    background-color: #0b9852;
+    border-color: #0b9852;
+    color: white;
+    border: 1px solid #ddd;
+}
+
+.btn-asiento {
+    border: 1px solid #ddd;
+
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;   
+    border-color: #0b9852;
+    justify-content: center;
+}
+
+.grid-container-filtered{
+    display: inline-flex;
+    justify-content: center;
+    grid-template-columns: 50px 50px 50px; /*Make the grid smaller than the container*/
+    gap: 10px;
+    padding: 10px;
+}
