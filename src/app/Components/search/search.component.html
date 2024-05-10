@@ -50,7 +50,7 @@
   <div class="container">
     <div class="row"> 
       <div class="col">
-    <table class="table">
+    <table *ngIf="busInfoTable.length > 0" class="table">
       <thead>
         <tr>
           <th scope="col">Compañía</th>

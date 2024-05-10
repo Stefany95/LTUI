@@ -215,7 +215,9 @@ export class SearchComponent implements OnInit {
                 arrival: formattedTime,
                 departure: formattedTimeDeparture,
                 seatClass: x.seatClass,
-                price: x.price.seatPrice
+                price: x.price.seatPrice,
+                from: x.from.name,
+                to: x.to.name
               }
             });
 

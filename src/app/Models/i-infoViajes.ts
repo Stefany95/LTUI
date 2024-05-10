@@ -20,7 +20,7 @@ export interface IPrice {
 }
 
 export interface IConnection {
-    node: Location;
+    node: ILocation;
     waitingInformation: IWaitingInformation;
     company: ICompany;
     seatClass: string;
@@ -36,8 +36,8 @@ export interface IWaitingInformation {
 export interface IBusInfo {
     id: string;
     company: ICompany;
-    from: Location;
-    to: Location;
+    from: ILocation;
+    to: ILocation;
     availableSeats: number;
     withBPE: boolean;
     departure: IDepartureArrival;
@@ -60,4 +60,6 @@ export interface IInfoBustable{
     arrival : string;
     price : number;
     seatClass: string;
+    from: string;
+    to: string;
 }

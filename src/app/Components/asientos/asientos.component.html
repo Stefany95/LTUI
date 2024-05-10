@@ -2,9 +2,10 @@
     <hr>
 </div>
 <div class="container border-container pb-3">
-    <div class="tittle-DetailBus m-2 p-1">
-        <h5>Bus seleccionado</h5>
+    <div class="tittle-DetailBus m-2 p-1 text-center">
+        <h5>Bus seleccionado {{ busSelected?.from }} - {{ busSelected?.to }} </h5>
     </div>
+    <div class="row text-center">
     <section class="mb-1 mt-4 d-flex justify-content-center align-items-center">
         <div class="borderDetailBus">
             <span class="margin-left top-bottom"><strong>Compañía </strong>{{ busSelected?.company }}</span>
