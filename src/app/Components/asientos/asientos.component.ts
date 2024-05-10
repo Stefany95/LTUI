@@ -37,54 +37,77 @@ export class AsientosComponent implements OnInit {
     this.GetAsientos();
   }
 
+  /**
+   * Metodo para mapear pocision de div en posision x
+   * @param x 
+   * @returns 
+   */
+  GetGridColumn(x: number): string {
+    return `${x + 1} / span 1`;
+  }
+
+  /**
+   * Metodo para mapear pocision de div en posision y
+   */
+  GetGridRow(y: number): string {
+    return `${y + 1} / span 1`;
+  }
+
+
+/**
+ * Metodo que se ejecuta al seleccionar asientos disponibles
+ * @param _seat 
+ */
   SelectAsiento(_seat: IAsientos) {
     _seat.selected = !_seat.selected;
 
     let cantAsiento = this.asientos.filter(x => x.selected).length;
 
-    this.TotalPrice = this.busSelected && this.busSelected?.price > 0 && cantAsiento > 1 ? +(this.busSelected.price * cantAsiento).toFixed(2) :this.busSelected?.price ;
+    this.TotalPrice = this.busSelected && this.busSelected?.price > 0 && cantAsiento > 1 ? +(this.busSelected.price * cantAsiento).toFixed(2) : this.busSelected?.price;
 
-   this.asientosFiltered = this.asientos.filter(x=> x.selected);
+    this.asientosFiltered = this.asientos.filter(x => x.selected);
   }
 
+
+  /**
+   * Metodo obtener asientos por travelId
+   */
   GetAsientos(): void {
     if (this.busSelected && this.busSelected.id) {
 
-    let search = {
-      travelId: this.busSelected.id,
-      type: "list",
-      orientation: "vertical"
+      let search = {
+        travelId: this.busSelected.id,
+        type: "list",
+        orientation: "horizontal"
 
-    } as ISearchFilterAsientos;
+      } as ISearchFilterAsientos;
 
-    this.spinnerService.showSpinner();
-    this.searchCitiesService.GetAsientos(search).pipe(
-      finalize(() => this.spinnerService.hideSpinner())
-    )
-      .subscribe({
-        next: ((callback) => {
+      this.spinnerService.showSpinner();
+      this.searchCitiesService.GetAsientos(search).pipe(
+        finalize(() => this.spinnerService.hideSpinner())
+      )
+        .subscribe({
+          next: ((callback) => {
 
-          if (callback && callback.Data) {
-            this.asientos = callback.Data;
-           
+            if (callback && callback.Data) {
+              this.asientos = callback.Data;
 
-            this.asientos.map(x=>{
+              this.asientos.map(x => {
 
-              if(x.seat == ""){
-                x.seat = 'X';
-              }
+                if (x.seat == "") {
+                  x.seat = 'X';
+                }
+                return { ...x, }
+              });
+            }
 
-              return{...x} 
-            });
-          }
+          }),
+          error: ((err) => {
+            console.log(err);
+          })
 
-        }),
-        error: ((err) => {
-          console.log(err);
-        })
-
-      });
-  }
+        });
+    }
 
   }
 

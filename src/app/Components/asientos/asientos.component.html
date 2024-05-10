@@ -6,49 +6,47 @@
         <h5>Bus seleccionado {{ busSelected?.from }} - {{ busSelected?.to }} </h5>
     </div>
     <div class="row text-center">
-    <section class="mb-1 mt-4 d-flex justify-content-center align-items-center">
-        <div class="borderDetailBus">
-            <span class="margin-left top-bottom"><strong>Compañía </strong>{{ busSelected?.company }}</span>
-            <span class="margin-left top-bottom"><strong>Partida </strong>{{ busSelected?.departure }}</span>
-            <span class="margin-left top-bottom"><strong>Llegada </strong>{{ busSelected?.arrival }}</span>
-            <span class="margin-left top-bottom"><strong>Clase </strong>{{ busSelected?.seatClass }}</span>
-            <span class="margin-left top-bottom"><strong>Precio </strong>{{ TotalPrice }}</span>
-        </div>
-    </section>
-</div>
-
-<div class="container">
-    <div class="title-select-asiento text-center mt-3 m-2 p-1">
-        <p class="fw-bolder">Seleccione la cantidad de pasajes marcando como poltronas deseadas</p>
-    </div>
-
-</div>
-
-<div class="container mt-5">
-    <div class="grid-container">
-        <div class="m-1 p-1" *ngFor="let seat of asientos"
-            [ngStyle]="{ 'grid-row': seat.position.x, 'grid-column': seat.position.y }">
-            <button *ngIf="seat.position.y !== 0"
-                [ngClass]="{'btn-selected': seat.selected, 'btn-asiento': !seat.selected}" class="btn"
-                [disabled]="seat.occupied" (click)="SelectAsiento(seat)">
-                {{ seat.seat }}
-            </button>
-        </div>
-    </div>
-</div>
-
-
-<div class="container mt-5">
-    <div class="row text-center title-select-asiento">
-        <p class="fw-bolder">Campos seleccionados</p>
-    </div>
-    <div class="grid-container-filtered justify-content-center">
-
-        <ng-container *ngFor="let seat of asientosFiltered">
-            <div class="col m-1 p-1 seat-add text-center">
-                {{ seat.seat }}
+        <section class="mb-1 mt-4 d-flex justify-content-center align-items-center">
+            <div class="borderDetailBus">
+                <span class="margin-left top-bottom"><strong>Compañía </strong>{{ busSelected?.company }}</span>
+                <span class="margin-left top-bottom"><strong>Partida </strong>{{ busSelected?.departure }}</span>
+                <span class="margin-left top-bottom"><strong>Llegada </strong>{{ busSelected?.arrival }}</span>
+                <span class="margin-left top-bottom"><strong>Clase </strong>{{ busSelected?.seatClass }}</span>
+                <span class="margin-left top-bottom"><strong>Precio </strong>{{ TotalPrice }}</span>
             </div>
-
-        </ng-container>
+        </section>
     </div>
-</div>
+
+    <div class="container">
+        <div class="title-select-asiento text-center mt-3 m-2 p-1">
+            <p class="fw-bolder">Seleccione la cantidad de pasajes marcando como poltronas deseadas</p>
+        </div>
+    </div>
+
+    <div class="container mt-4" style="width: 100%; overflow: auto;">
+        <div class="grid-container">
+            <div *ngFor="let position of asientos" class="position-item"
+                [style.gridColumn]="GetGridColumn(position.position.x)"
+                [style.gridRow]="GetGridRow(position.position.y)">
+                <button [ngClass]="{'btn-selected': position.selected, 'btn-asiento': !position.selected}" class="btn"
+                    [disabled]="position.occupied" (click)="SelectAsiento(position)">
+                    {{ position.seat }}
+                </button>
+            </div>
+        </div>
+    </div> 
+
+    <div class="container mt-5">
+        <div class="row text-center title-select-asiento m-2">
+            <p class="fw-bolder">Campos seleccionados</p>
+        </div>
+        <div class="grid-container-filtered justify-content-center">
+
+            <ng-container *ngFor="let seat of asientosFiltered">
+                <div class="col m-1 p-1 seat-add text-center">
+                    {{ seat.seat }}
+                </div>
+
+            </ng-container>
+        </div>
+    </div>
