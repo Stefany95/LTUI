@@ -42,16 +42,16 @@ export class AsientosComponent implements OnInit {
 
     let cantAsiento = this.asientos.filter(x => x.selected).length;
 
-    this.TotalPrice = this.busSelected && this.busSelected?.price > 0 && cantAsiento > 1 ? this.busSelected.price * cantAsiento :this.busSelected?.price ;
+    this.TotalPrice = this.busSelected && this.busSelected?.price > 0 && cantAsiento > 1 ? +(this.busSelected.price * cantAsiento).toFixed(2) :this.busSelected?.price ;
 
    this.asientosFiltered = this.asientos.filter(x=> x.selected);
   }
 
   GetAsientos(): void {
-    //if (this.busSelected && this.busSelected.id) {
+    if (this.busSelected && this.busSelected.id) {
 
     let search = {
-      travelId: "1_1db559a905427833b844c85188db9049",//this.busSelected.id,
+      travelId: this.busSelected.id,
       type: "list",
       orientation: "vertical"
 
@@ -86,7 +86,7 @@ export class AsientosComponent implements OnInit {
       });
   }
 
-  //}
+  }
 
 
 }
