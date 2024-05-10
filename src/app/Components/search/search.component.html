@@ -7,12 +7,19 @@
     <form [formGroup]="formSearchFilter">
 
       <div class="row custom-row-style">
-
         <div class="form-group col-md-3">
           <ng-template #rt let-r="result" let-t="term">
-            <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+            <ngb-highlight [ngClass]="{'dropdown-item': !r.substops}"  [result]="r.name" [term]="t"></ngb-highlight>
+            <div *ngIf="r.substops"> 
+              <ul style="padding: 0%;" >
+                <li class="dropdown-item" *ngFor="let substop of r.substops">
+                  <i class="bi bi-arrow-return-right"> &nbsp; </i>
+                  <ngb-highlight [result]="substop.name" [term]="t" (click)="onSelectOption({item: substop}, true, true)  "></ngb-highlight>
+                </li>
+              </ul>
+            </div>
           </ng-template>
-
+ 
           <label for="typeahead-template">From: </label>
 
           <input id="typeahead-format" type="text" class="form-control" formControlName="from" [resultTemplate]="rt"
@@ -22,7 +29,15 @@
 
         <div class="form-group col-md-3">
           <ng-template #rt let-r="result" let-t="term">
-            <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+            <ngb-highlight [ngClass]="{'dropdown-item': !r.substops}"  [result]="r.name" [term]="t"></ngb-highlight>
+            <div *ngIf="r.substops"> 
+              <ul style="padding: 0%;" >
+                <li class="dropdown-item" *ngFor="let substop of r.substops">
+                  <i class="bi bi-arrow-return-right"> &nbsp; </i>
+                  <ngb-highlight [result]="substop.name" [term]="t" (click)="onSelectOption({item: substop}, false, true)  "></ngb-highlight>
+                </li>
+              </ul>
+            </div>
           </ng-template>
 
           <label for="typeahead-template">To: </label>

@@ -14,7 +14,7 @@ export class SearchCitiesService {
 
   constructor(private httpClient: HttpClient) { }
  
-  private BaseURL = 'https://localhost:7143/api/Search/'
+  private BaseURL = 'http://localhost:5192/api/Search/'
 
   GetParadas(): Observable<IResponse<IParadas[]>>{   
     return this.httpClient.get<IResponse<IParadas[]>>(`${this.BaseURL}GetParadas`);

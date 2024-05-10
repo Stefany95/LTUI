@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+.dropdown-item:hover {
+    color: white;
+    background-color: #0d6efd;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    color: inherit;
+    background-color: transparent;
+   
+}
+
+.dropdown-menu.show {
+    height: 350px !important;
+    overflow: auto !important;
+}  

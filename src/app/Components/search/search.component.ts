@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SearchCitiesService } from '../../Services/search-cities.service';
 import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, finalize, map } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,7 +8,7 @@ import { ISearchFilterBus } from '../../Models/i-searchFilter';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { SharedServiceService } from '../../Services/shared-service.service';
-import { IParadas } from '../../Models/i-paradas';
+import { IParadas, ISubStop } from '../../Models/i-paradas';
 
 @Component({
   selector: 'app-search',
@@ -16,7 +16,6 @@ import { IParadas } from '../../Models/i-paradas';
   styleUrl: './search.component.css'
 })
 export class SearchComponent implements OnInit {
-
   paradas: IParadas[] = [];
   busInfo: IBusInfo[] = [];
   busInfoTable: IInfoBustable[] = [];
@@ -24,6 +23,8 @@ export class SearchComponent implements OnInit {
   isError: boolean = false;
   messageAlert: string = ""
   typeAlertEvent: boolean | null = false;
+  isFormFrom: boolean = false;
+  subestado!: ISubStop;
 
   /**
    *
@@ -32,7 +33,8 @@ export class SearchComponent implements OnInit {
     private spinnerService: SpinnerService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private sharedServiceService: SharedServiceService
+    private sharedServiceService: SharedServiceService,
+    private elementRef: ElementRef
   ) {
 
   }
@@ -57,13 +59,7 @@ export class SearchComponent implements OnInit {
 
   }
 
-  /**
-   * Reset 
-   */
-  Clean(): void {
 
-    this.formSearchFilter.controls["from"].setValue('');
-  }
 
   //#region Ciudades
 
@@ -85,18 +81,34 @@ export class SearchComponent implements OnInit {
 
 
   /**
-   * Evento al seleccionar ciudad
+   * Se agrega metodo porque nbgtypeahead se ejecuta 2 veces 1 por el item subparada
+   * selecciondada y otro por el padre parada
+   */
+  SetValue(): void {
+    this.isFormFrom ? this.formSearchFilter.get('from')?.setValue(this.subestado) :
+      this.formSearchFilter.get('to')?.setValue(this.subestado);
+  }
+
+  /**
+   * Evento al seleccionar parada
    * @param event 
    */
-  onSelectOption(event: any, _type: boolean): void {
+  onSelectOption(event: any, _typeFrom: boolean, _typeChild: boolean = false): void {
+    const selectedItem = event.item as IParadas;
+    this.isFormFrom = _typeFrom;
 
-    const selectedItem = event.item;
-    if (!selectedItem || (!selectedItem.name.includes("PR") && !selectedItem.name.includes("SP"))) {
-      this.typeAlertEvent = _type;
-      this.ShowAlert("Solo se permite estados de SP (São Paulo) y PR (Paraná)");
-      
+    if (!_typeChild) {
+      this.SetValue();
+
+    } else {
+      this.subestado = selectedItem;
     }
 
+    if (!selectedItem || (!selectedItem.name.includes("PR") && !selectedItem.name.includes("SP"))) {
+      this.typeAlertEvent = _typeFrom;
+      this.ShowAlert("Solo se permite estados de SP (São Paulo) y PR (Paraná)");
+
+    }
   }
 
   ShowAlert(_mesagge: string): void {
@@ -118,6 +130,7 @@ export class SearchComponent implements OnInit {
 
           if (callback && callback.Data) {
             this.paradas = callback.Data;
+
           }
 
         }),
@@ -175,7 +188,7 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    if(!searchValues.to.name.includes("PR") && !searchValues.to.name.includes("SP")){
+    if (!searchValues.to.name.includes("PR") && !searchValues.to.name.includes("SP")) {
       this.typeAlertEvent = false;
       this.ShowAlert("Solo se permite estados de SP (São Paulo) y PR (Paraná)");
       return;
@@ -239,9 +252,9 @@ export class SearchComponent implements OnInit {
   //#region Seleccionar Bus
 
   OnSelectedBus(_bus: IInfoBustable): void {
-    this.sharedServiceService.EmitBusSelected(_bus); 
-    this.router.navigate(['searchSeats']);   
-  
+    this.sharedServiceService.EmitBusSelected(_bus);
+    this.router.navigate(['searchSeats']);
+
 
   }
 
